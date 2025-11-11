@@ -48,7 +48,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--color-roxo-escuro);
+  /* background-color: var(--color-roxo-escuro); */
   cursor: pointer;
   transition: all 0.25s;
 }
