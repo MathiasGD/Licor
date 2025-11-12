@@ -1,12 +1,12 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 
-function Layout() {
+function ProfissionalLayout() {
   const location = useLocation();
 
   // const isActive = (path: string) => location.pathname === path;
-  const isActiveEstoque = location.pathname === "/estoque";
-  const isActivePedidos = location.pathname === "/pedidos";
-  const isActiveDrinks = location.pathname === "/drinks";
+  const isActiveEstoque = location.pathname === "/profissional/estoque";
+  const isActivePedidos = location.pathname === "/profissional/pedidos";
+  const isActiveDrinks = location.pathname === "/profissional/drinks";
 
   return (
     <div className="h-screen bg-preto p-10">
@@ -24,4 +24,4 @@ function Layout() {
   )
 }
 
-export default Layout;
+export default ProfissionalLayout;

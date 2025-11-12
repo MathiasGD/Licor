@@ -1,25 +1,30 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Menu from "./pages/menu";
-import Estoque from "./pages/estoque";
-import Pedidos from "./pages/pedidos";
-import Layout from "./Layout";
-import Drinks from "./pages/drinks";
+import ProfissionalLayout from "./profissional/profissional-layout";
+import Menu from "./profissional/pages/menu";
+import Estoque from "./profissional/pages/estoque";
+import Pedidos from "./profissional/pages/pedidos";
+import Drinks from "./profissional/pages/drinks";
+import ClienteLayout from "./cliente/cliente-layout";
 
 function App() {
   return (
     <BrowserRouter>
+    
+    
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Menu />} />
-          <Route path="/estoque" element={<Estoque />} />
-          <Route path="/pedidos" element={<Pedidos />} />   
-          <Route path="/drinks" element={<Drinks />} />
+        <Route element={<ProfissionalLayout />}>
+          <Route path="/profissional" element={<Menu />} />
+          <Route path="/profissional/estoque" element={<Estoque />} />
+          <Route path="/profissional/pedidos" element={<Pedidos />} />   
+          <Route path="/profissional/drinks" element={<Drinks />} />
+        </Route>
+        <Route element={<ClienteLayout />}>
+          <Route path="/cliente" element={<ClienteMenu />} />
         </Route>
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </BrowserRouter>
   );
-
 }
 
 
