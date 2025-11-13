@@ -5,12 +5,13 @@ import Estoque from "./profissional/pages/estoque";
 import Pedidos from "./profissional/pages/pedidos";
 import Drinks from "./profissional/pages/drinks";
 import ClienteLayout from "./cliente/cliente-layout";
+import Cardapio from "./cliente/pages/cardapio";
+import Intro from "./global-pages/intro";
 
 function App() {
   return (
     <BrowserRouter>
-    
-    
+      <Route path="/" element={<Intro />} />
       <Routes>
         <Route element={<ProfissionalLayout />}>
           <Route path="/profissional" element={<Menu />} />
@@ -19,7 +20,7 @@ function App() {
           <Route path="/profissional/drinks" element={<Drinks />} />
         </Route>
         <Route element={<ClienteLayout />}>
-          <Route path="/cliente" element={<ClienteMenu />} />
+          <Route path="/cliente" element={<Cardapio />} />
         </Route>
         <Route path="*" element={<div>404</div>} />
       </Routes>
