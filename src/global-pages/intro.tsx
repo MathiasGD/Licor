@@ -5,17 +5,18 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const Intro = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const qrCode = searchParams.get("qr");
+  
 
   useEffect(() => {
     setTimeout(() => {
+      const qrCode = searchParams.get("qr");
       if (qrCode) {
-        navigate(`/cliente`);
+        navigate("/cliente");
       } else {
         navigate("/profissional");
       }
     }, 3000);
-  }, [navigate, qrCode]);
+  }, [navigate, searchParams]);
 
   return (
     <div className="h-screen bg-preto flex items-center justify-center">

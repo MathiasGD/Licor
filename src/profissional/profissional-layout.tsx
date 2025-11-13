@@ -11,7 +11,7 @@ function ProfissionalLayout() {
 
   return (
     <div className="h-screen bg-preto p-10">
-      <div className="bg-branco p-9 flex flex-col items-center gap-9 h-full">
+      <div className="bg-branco p-9 flex flex-col items-center gap-9 h-full overflow-auto">
         <div className="flex items-center gap-18">
           <Link to="/profissional/estoque" className={`${isActiveEstoque ? "text-roxo font-medium" : "text-roxo-muito-escuro"}`}>Estoque</Link>
           <Link to="/profissional/pedidos" className={`${isActivePedidos ? "text-roxo font-medium" : "text-roxo-muito-escuro"}`}>Pedidos</Link>

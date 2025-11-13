@@ -41,6 +41,37 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: '2px',            
+            backgroundColor: '#FFF3EA',
+            height: '36px',
+            '& input': {
+              fontSize: '14px',
+            },
+            '& fieldset': {
+              borderColor: '#7A1C52',
+            },
+            '&:hover fieldset': {
+              borderColor: '#980A68',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#980A68',
+            },
+          },
+          '& .MuiInputLabel-root': {
+            fontSize: '14px',
+            top: '0px',
+            color: '#2B2725',
+            '&.Mui-focused': {
+              color: '#980A68',
+            },
+          },
+        },
+      },
+    },
   },
 })
 

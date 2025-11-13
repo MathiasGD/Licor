@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 
 const PedidoCard = () => {
   return (
-    <div className="flex flex-col gap-4 max-w-116 w-full">
+    <div className="flex flex-col gap-4 w-116">
       <div className="flex gap-4">
         <div className="h-full w-px bg-branco-muito-escuro" />
         <div className="flex flex-col gap-3.5 w-full">

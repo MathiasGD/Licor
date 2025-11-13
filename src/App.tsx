@@ -11,19 +11,19 @@ import Intro from "./global-pages/intro";
 function App() {
   return (
     <BrowserRouter>
+    <Routes>
       <Route path="/" element={<Intro />} />
-      <Routes>
-        <Route element={<ProfissionalLayout />}>
-          <Route path="/profissional" element={<Menu />} />
-          <Route path="/profissional/estoque" element={<Estoque />} />
-          <Route path="/profissional/pedidos" element={<Pedidos />} />   
-          <Route path="/profissional/drinks" element={<Drinks />} />
-        </Route>
-        <Route element={<ClienteLayout />}>
-          <Route path="/cliente" element={<Cardapio />} />
-        </Route>
-        <Route path="*" element={<div>404</div>} />
-      </Routes>
+      <Route element={<ProfissionalLayout />}>
+        <Route path="/profissional" element={<Menu />} />
+        <Route path="/profissional/estoque" element={<Estoque />} />
+        <Route path="/profissional/pedidos" element={<Pedidos />} />   
+        <Route path="/profissional/drinks" element={<Drinks />} />
+      </Route>
+      <Route element={<ClienteLayout />}>
+        <Route path="/cliente" element={<Cardapio />} />
+      </Route>
+      <Route path="*" element={<div>404</div>} />
+    </Routes>
     </BrowserRouter>
   );
 }
