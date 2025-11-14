@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ToastContainer } from 'react-toastify'
 
 const theme = createTheme({
   palette: {
@@ -88,6 +89,14 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <App />
+        <ToastContainer 
+          position="bottom-right"
+          autoClose={5000}
+          newestOnTop={true}
+          closeOnClick
+          draggable
+          theme="colored"
+        />
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,
