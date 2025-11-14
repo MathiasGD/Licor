@@ -14,6 +14,11 @@ export enum StatusPedido {
   ACEITO = "aceito",
 }
 
+export enum TipoUsuario {
+  ADMIN = "admin",
+  PROFISSIONAL = "profissional",
+}
+
 export interface Drink {
   id: number;
   nome: string;
@@ -151,6 +156,29 @@ export const useCadastrarEstoque = () => {
       quantidadeDisponivel: number;
     }) => {
       const response = await api.post("/estoques/estoque", data);
+      return response.data;
+    },
+  });
+};
+
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: async (data: { email: string; senha: string }) => {
+      const response = await api.get("/usuarios/usuario", { params: data });
+      return response.data;
+    },
+  });
+};
+
+export const useCadastrarUsuario = () => {
+  return useMutation({
+    mutationFn: async (data: {
+      nome: string;
+      email: string;
+      senha: string;
+      tipoUsuario: TipoUsuario;
+    }) => {
+      const response = await api.post("/usuarios/usuario", data);
       return response.data;
     },
   });

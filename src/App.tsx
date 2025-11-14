@@ -7,6 +7,7 @@ import Drinks from "./profissional/pages/drinks";
 import ClienteLayout from "./cliente/cliente-layout";
 import Cardapio from "./cliente/pages/cardapio";
 import Intro from "./global-pages/intro";
+import Login from "./profissional/pages/login";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Intro />} />
       <Route element={<ProfissionalLayout />}>
-        <Route path="/profissional" element={<Menu />} />
+        <Route path="/profissional" element={<Login />} />
+        <Route path="/profissional/menu" element={<Menu />} />
         <Route path="/profissional/estoque" element={<Estoque />} />
         <Route path="/profissional/pedidos" element={<Pedidos />} />   
         <Route path="/profissional/drinks" element={<Drinks />} />
