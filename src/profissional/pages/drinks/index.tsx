@@ -70,6 +70,10 @@ const ingredientes: Ingrediente[] = [
 function Drinks() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [composicao, setComposicao] = useState<{unidadeMedida: string, quantidade: number | '', ingredienteId: number | ''}[]>([{ingredienteId: '', unidadeMedida: "", quantidade: '', }]);
+  const [nomeNovoDrink, setNomeNovoDrink] = useState('');
+  const [precoNovoDrink, setPrecoNovoDrink] = useState('');
+  const [descricaoNovoDrink, setDescricaoNovoDrink] = useState('');
+  const [modoPreparoNovoDrink, setModoPreparoNovoDrink] = useState('');
 
   const adicionarIngrediente = () => {
     setComposicao([...composicao, { ingredienteId: '', unidadeMedida: "", quantidade: '',  }]);
@@ -145,15 +149,15 @@ function Drinks() {
         <div className="flex flex-col justify-between gap-3 min-h-full">
           <div className="flex flex-col gap-3">
             <p className="text-xl font-medium text-roxo-escuro self-center">Novo drink</p>
-            <TextField fullWidth placeholder="Nome" />
+            <TextField fullWidth placeholder="Nome" value={nomeNovoDrink} onChange={(e) => setNomeNovoDrink(e.target.value)} />
             <div className="w-full h-px bg-branco-muito-escuro" />
-            <TextField fullWidth placeholder="Preço" />
+            <TextField fullWidth placeholder="Preço" type="number" value={precoNovoDrink} onChange={(e) => setPrecoNovoDrink(e.target.value)} />
             <div className="w-full h-px bg-branco-muito-escuro" />
-            <TextField fullWidth placeholder="Descrição" />
+            <TextField fullWidth placeholder="Descrição" value={descricaoNovoDrink} onChange={(e) => setDescricaoNovoDrink(e.target.value)} />
             <div className="w-full h-px bg-branco-muito-escuro" />
             <p className="text-sm">Composição:</p>
             <div className="w-full h-px bg-branco-muito-escuro" />
-            <TextField fullWidth placeholder="Modo de preparo" />
+            <TextField fullWidth placeholder="Modo de preparo" value={modoPreparoNovoDrink} onChange={(e) => setModoPreparoNovoDrink(e.target.value)} />
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Button variant="outlined" disableElevation onClick={() => setOpenModalCadastro(false)}>Cancelar</Button>
