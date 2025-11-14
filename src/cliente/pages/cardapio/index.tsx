@@ -35,31 +35,31 @@ function Cardapio() {
         </div>
       </Modal>
       {drinks.map((drink) => <DrinkCard key={drink.id} drink={drink} selecionarDrink={() => setDrinkSelecionado(drink)} />)}
-        <Modal isOpen={!!drinkSelecionado}>
-          {drinkSelecionado && (
-            <div className="flex flex-col items-center justify-between h-full">
-              <div className="flex flex-col items-center gap-4">
-                <LocalBarIcon className="text-roxo" />
-                <div className="flex flex-col items-center">
-                  <p className="text-roxo-escuro font-medium text-xl">{drinkSelecionado.nome}</p>
-                  <p>{drinkSelecionado.preco}</p>
-                </div>
-                <div className="w-full h-px bg-branco-muito-escuro" />
-                <p className="text-sm text-preto-fraco">{drinkSelecionado.descricao}</p>
-                <div className="w-full h-px bg-branco-muito-escuro" />
-                <div className="flex flex-col items-center gap-2 text-sm">
-                  <p className="font-medium">Composição</p>
-                  {drinkSelecionado.composicao.map((ingrediente) => <p key={ingrediente.id} className="text-preto-fraco"> {ingrediente.nome}</p>)}
-                </div>
-                <div className="w-full h-px bg-branco-muito-escuro" />
+      <Modal isOpen={!!drinkSelecionado}>
+        {drinkSelecionado && (
+          <div className="flex flex-col items-center justify-between h-full">
+            <div className="flex flex-col items-center gap-4">
+              <LocalBarIcon className="text-roxo" />
+              <div className="flex flex-col items-center">
+                <p className="text-roxo-escuro font-medium text-xl">{drinkSelecionado.nome}</p>
+                <p>{drinkSelecionado.preco}</p>
               </div>
-              <div className="flex flex-col gap-2 w-full">
-                <Button variant="outlined" onClick={() => setDrinkSelecionado(null)} disableElevation>Cancelar</Button>
-                <Button variant="contained" onClick={() => setDrinkSelecionado(null)} disableElevation>Fazer pedido | {drinkSelecionado.preco}$</Button>
+              <div className="w-full h-px bg-branco-muito-escuro" />
+              <p className="text-sm text-preto-fraco">{drinkSelecionado.descricao}</p>
+              <div className="w-full h-px bg-branco-muito-escuro" />
+              <div className="flex flex-col items-center gap-2 text-sm">
+                <p className="font-medium">Composição</p>
+                {drinkSelecionado.composicao.map((ingrediente) => <p key={ingrediente.id} className="text-preto-fraco"> {ingrediente.nome}</p>)}
               </div>
+              <div className="w-full h-px bg-branco-muito-escuro" />
             </div>
-          )}     
-        </Modal>
+            <div className="flex flex-col gap-2 w-full">
+              <Button variant="outlined" onClick={() => setDrinkSelecionado(null)} disableElevation>Cancelar</Button>
+              <Button variant="contained" onClick={() => setDrinkSelecionado(null)} disableElevation>Fazer pedido | {drinkSelecionado.preco}$</Button>
+            </div>
+          </div>
+        )}     
+      </Modal>
     </div>
     
   );

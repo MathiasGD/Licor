@@ -2,13 +2,45 @@ import { useQuery } from "@tanstack/react-query";
 import api from "..";
 
 export interface Pedido {
-  id: string;
+  id: number;
+  cliente: string;
+  dataPedido: Date;
+  status: StatusPedido;
+  drink: Drink;
+}
+
+export enum StatusPedido {
+  PENDENTE = "pendente",
+  ACEITO = "aceito",
+}
+
+export interface Drink {
+  id: number;
   nome: string;
-  email: string;
-  telefone: string;
-  endereco: string;
-  cidade: string;
-  estado: string;
+  modoPreparo: string;
+  precoBase: number;
+  descricao?: string;
+  composicao: ComposicaoDrink[];
+}
+
+export interface ComposicaoDrink {
+  id: number;
+  unidadeMedida: string;
+  quantidade: number;
+  ingrediente: Ingrediente;
+}
+
+export interface Ingrediente {
+  id: number;
+  nome: string;
+  descricao?: string;
+  estoque: Estoque;
+}
+
+export interface Estoque {
+  id: number;
+  dataAtualizado: Date;
+  quantidadeDisponivel: number;
 }
 
 // export const getPedidos = async () => {
