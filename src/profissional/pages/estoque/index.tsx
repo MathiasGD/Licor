@@ -1,31 +1,31 @@
 import { Button, MenuItem, Select, TextField } from "@mui/material";
-import type { Ingrediente } from "../../../services/pedidos";
+import { useCadastrarEstoque, useCadastrarIngrediente, useIngredientes } from "../../../services/geral";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import Modal from "../../components/modal";
 
-const ingredientes: Ingrediente[] = [
-  {
-    id: 1,
-    nome: "Ingrediente 1",
-    descricao: "Descrição do ingrediente 1",
-    estoque: {
-      id: 1,
-      dataAtualizado: new Date(),
-      quantidadeDisponivel: 100,
-    },
-  },
-  {
-    id: 2,
-    nome: "Ingrediente 2",
-    descricao: "Descrição do ingrediente 2",
-    estoque: {
-      id: 2,
-      dataAtualizado: new Date(),
-      quantidadeDisponivel: 100,
-    },
-  },
-];
+// const ingredientes: Ingrediente[] = [
+//   {
+//     id: 1,
+//     nome: "Ingrediente 1",
+//     descricao: "Descrição do ingrediente 1",
+//     estoque: {
+//       id: 1,
+//       dataAtualizado: new Date(),
+//       quantidadeDisponivel: 100,
+//     },
+//   },
+//   {
+//     id: 2,
+//     nome: "Ingrediente 2",
+//     descricao: "Descrição do ingrediente 2",
+//     estoque: {
+//       id: 2,
+//       dataAtualizado: new Date(),
+//       quantidadeDisponivel: 100,
+//     },
+//   },
+// ];
 
 const colunas: GridColDef[] = [
   {
@@ -57,6 +57,10 @@ const colunas: GridColDef[] = [
 ]
 
 function Estoque() {
+  const ingredientes = useIngredientes();
+  const cadastrarIngrediente = useCadastrarIngrediente();
+  const cadastrarEstoque = useCadastrarEstoque();
+
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalRegistro, setOpenModalRegistro] = useState(false);
   const [nomeNovoIngrediente, setNomeNovoIngrediente] = useState('');
@@ -101,7 +105,10 @@ function Estoque() {
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Button variant="outlined" disableElevation onClick={() => setOpenModalCadastro(false)}>Cancelar</Button>
-            <Button variant="contained" disableElevation onClick={() => setOpenModalCadastro(false)}>Cadastrar</Button>
+            <Button variant="contained" disableElevation onClick={() => {
+              cadastrarIngrediente.mutateAsync({ nome: nomeNovoIngrediente, descricao: descricaoNovoIngrediente })
+              setOpenModalCadastro(false);
+            }}>Cadastrar</Button>
           </div>
         </div>
       </Modal>
@@ -122,7 +129,12 @@ function Estoque() {
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Button variant="outlined" disableElevation onClick={() => setOpenModalRegistro(false)}>Cancelar</Button>
-            <Button variant="contained" disableElevation onClick={() => setOpenModalRegistro(false)}>Registrar</Button>
+            <Button variant="contained" disableElevation onClick={() => {
+              if (registroIngredienteId && registroQuantidade) {
+                cadastrarEstoque.mutateAsync({ ingredienteId: registroIngredienteId, quantidadeDisponivel: registroQuantidade })
+              }
+              setOpenModalRegistro(false);
+            }}>Registrar</Button>
           </div>
         </div>
       </Modal>

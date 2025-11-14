@@ -1,27 +1,27 @@
 import { Button, MenuItem, Select, TextField } from "@mui/material";
-import type { Drink, Ingrediente } from "../../../services/pedidos";
+import { useCadastrarDrink, useDrinks, useIngredientes } from "../../../services/geral";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import Modal from "../../components/modal";
 
-const drinks: Drink[] = [
-  {
-    id: 1,
-    nome: "Drink base",
-    modoPreparo: "Modo de preparo do drink base",
-    precoBase: 34.9,
-    descricao: "Descrição do drink base",
-    composicao: [],
-  },
-  {
-    id: 2,
-    nome: "Drink de limão",
-    modoPreparo: "Modo de preparo do drink de limão",
-    precoBase: 39.9,
-    descricao: "Descrição do drink de limão",
-    composicao: [],
-  },
-];
+// const drinks: Drink[] = [
+//   {
+//     id: 1,
+//     nome: "Drink base",
+//     modoPreparo: "Modo de preparo do drink base",
+//     precoBase: 34.9,
+//     descricao: "Descrição do drink base",
+//     composicao: [],
+//   },
+//   {
+//     id: 2,
+//     nome: "Drink de limão",
+//     modoPreparo: "Modo de preparo do drink de limão",
+//     precoBase: 39.9,
+//     descricao: "Descrição do drink de limão",
+//     composicao: [],
+//   },
+// ];
 
 const colunas: GridColDef[] = [
   {
@@ -44,30 +44,34 @@ const colunas: GridColDef[] = [
   },
 ]
 
-const ingredientes: Ingrediente[] = [
-  {
-    id: 1,
-    nome: "Ingrediente 1",
-    descricao: "Descrição do ingrediente 1",
-    estoque: {
-      id: 1,
-      dataAtualizado: new Date(),
-      quantidadeDisponivel: 100,
-    },
-  },
-  {
-    id: 2,
-    nome: "Ingrediente 2",
-    descricao: "Descrição do ingrediente 2",
-    estoque: {
-      id: 2,
-      dataAtualizado: new Date(),
-      quantidadeDisponivel: 100,
-    },
-  },
-]
+// const ingredientes: Ingrediente[] = [
+//   {
+//     id: 1,
+//     nome: "Ingrediente 1",
+//     descricao: "Descrição do ingrediente 1",
+//     estoque: {
+//       id: 1,
+//       dataAtualizado: new Date(),
+//       quantidadeDisponivel: 100,
+//     },
+//   },
+//   {
+//     id: 2,
+//     nome: "Ingrediente 2",
+//     descricao: "Descrição do ingrediente 2",
+//     estoque: {
+//       id: 2,
+//       dataAtualizado: new Date(),
+//       quantidadeDisponivel: 100,
+//     },
+//   },
+// ]
 
 function Drinks() {
+  const drinks = useDrinks();
+  const ingredientes = useIngredientes();
+  const cadastrarDrink = useCadastrarDrink();
+
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [composicao, setComposicao] = useState<{unidadeMedida: string, quantidade: number | '', ingredienteId: number | ''}[]>([{ingredienteId: '', unidadeMedida: "", quantidade: '', }]);
   const [nomeNovoDrink, setNomeNovoDrink] = useState('');
@@ -161,7 +165,10 @@ function Drinks() {
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Button variant="outlined" disableElevation onClick={() => setOpenModalCadastro(false)}>Cancelar</Button>
-            <Button variant="contained" disableElevation onClick={() => setOpenModalCadastro(false)}>Cadastrar</Button>
+            <Button variant="contained" disableElevation onClick={() => {
+              cadastrarDrink.mutateAsync({ nome: nomeNovoDrink, modoPreparo: modoPreparoNovoDrink, precoBase: Number(precoNovoDrink), descricao: descricaoNovoDrink, composicao: composicao.map((item) => ({ ingredienteId: Number(item.ingredienteId), unidadeMedida: item.unidadeMedida, quantidade: Number(item.quantidade) })) })
+              setOpenModalCadastro(false);
+            }}>Cadastrar</Button>
           </div>
         </div>
       </Modal>

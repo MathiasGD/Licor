@@ -1,6 +1,6 @@
 import LocalBarIcon from '@mui/icons-material/LocalBar';
 import { Button } from '@mui/material';
-import type { Pedido } from '../../../../services/pedidos';
+import type { Pedido } from '../../../../services/geral';
 
 const PedidoCard = ({ pedido, onClick }: { pedido: Pedido, onClick: () => void }) => {
   return (
