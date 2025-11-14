@@ -77,7 +77,7 @@ export const useCadastrarPedido = () => {
 export const useAceitarPedido = () => {
   return useMutation({
     mutationFn: async (pedidoId: number) => {
-      const response = await api.post("/pedidos/aceitar-pedido", pedidoId);
+      const response = await api.post("/pedidos/aceitar-pedido", {pedidoId});
       return response.data;
     },
   });
