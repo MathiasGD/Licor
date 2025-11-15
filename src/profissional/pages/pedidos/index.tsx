@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { useAceitarPedido, usePedidos, type Pedido } from "../../../services/geral";
+import {
+  useAceitarPedido,
+  usePedidos,
+  type Pedido,
+} from "../../../services/geral";
 import PedidoCard from "./pedido-card";
 import Modal from "../../components/modal";
 import { Button } from "@mui/material";
@@ -58,18 +62,32 @@ import { Button } from "@mui/material";
 //         },
 //       ],
 //     },
-//   },    
+//   },
 // ]
 
 function Pedidos() {
-  const pedidos = usePedidos();
+  const pedidosQuery = usePedidos();
+  const pedidos = pedidosQuery.data || [];
   const aceitarPedido = useAceitarPedido();
 
-  const [pedidoSelecionado, setPedidoSelecionado] = useState<Pedido | null>(null);
+  const [pedidoSelecionado, setPedidoSelecionado] = useState<Pedido | null>(
+    null
+  );
+
+  if (pedidos.length === 0) {
+    return <p>Não há pedidos no momento.</p>;
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-        {pedidos.map((pedido) => <PedidoCard key={pedido.id} pedido={pedido} onClick={() => setPedidoSelecionado(pedido)} />)}
+        {pedidos.map((pedido) => (
+          <PedidoCard
+            key={pedido.id}
+            pedido={pedido}
+            onClick={() => setPedidoSelecionado(pedido)}
+          />
+        ))}
       </div>
       <Modal isOpen={!!pedidoSelecionado}>
         {pedidoSelecionado && (
@@ -78,24 +96,39 @@ function Pedidos() {
               <p className="text-xl font-medium">#{pedidoSelecionado.id}</p>
               <div className="flex flex-col items-center">
                 <p className="text-sm">Cliente:</p>
-                <p className="text-xl font-medium">{pedidoSelecionado.cliente}</p>
+                <p className="text-xl font-medium">
+                  {pedidoSelecionado.cliente}
+                </p>
               </div>
               <div className="w-20 h-px bg-roxo-escuro" />
               <div className="w-full flex flex-col gap-3.5">
                 <div className="flex flex-col">
-                  <p className="text-xl font-medium text-roxo-escuro">{pedidoSelecionado.drink.nome}</p>
-                  <p className="text-sm">{pedidoSelecionado.drink.precoBase}$</p>                
+                  <p className="text-xl font-medium text-roxo-escuro">
+                    {pedidoSelecionado.drink.nome}
+                  </p>
+                  <p className="text-sm">
+                    {pedidoSelecionado.drink.precoBase}$
+                  </p>
                 </div>
                 <div className="w-full h-px bg-branco-muito-escuro" />
                 <p className="font-medium">Composição</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {pedidoSelecionado.drink.composicao.map((ingrediente) => 
-                    <div key={ingrediente.id} className="p-3 bg-branco-escuro flex flex-col">
-                      <p className="text-sm font-medium">{ingrediente.ingrediente.nome}</p>
-                      <p className="text-sm">Quantidade: {ingrediente.quantidade}</p>
-                      <p className="text-sm">Unidade medida: {ingrediente.unidadeMedida}</p>
+                  {pedidoSelecionado.drink.composicao.map((ingrediente) => (
+                    <div
+                      key={ingrediente.id}
+                      className="p-3 bg-branco-escuro flex flex-col"
+                    >
+                      <p className="text-sm font-medium">
+                        {ingrediente.ingrediente.nome}
+                      </p>
+                      <p className="text-sm">
+                        Quantidade: {ingrediente.quantidade}
+                      </p>
+                      <p className="text-sm">
+                        Unidade medida: {ingrediente.unidadeMedida}
+                      </p>
                     </div>
-                  )}
+                  ))}
                 </div>
                 <div className="w-full h-px bg-branco-muito-escuro" />
                 <p className="font-medium">Modo de preparo</p>
@@ -103,24 +136,31 @@ function Pedidos() {
               </div>
             </div>
             <div className="flex flex-col gap-2 w-full">
-              <Button variant="outlined" onClick={() => setPedidoSelecionado(null)} disableElevation fullWidth>Voltar</Button>
-              <Button 
-                variant="contained" 
+              <Button
+                variant="outlined"
+                onClick={() => setPedidoSelecionado(null)}
+                disableElevation
+                fullWidth
+              >
+                Voltar
+              </Button>
+              <Button
+                variant="contained"
                 onClick={() => {
-                  aceitarPedido.mutateAsync(pedidoSelecionado.id)
+                  aceitarPedido.mutateAsync(pedidoSelecionado.id);
+                  pedidosQuery.refetch();
                   setPedidoSelecionado(null);
-                }} 
-                disableElevation 
-                fullWidth>
-                  Concluir pedido
-                </Button>
+                }}
+                disableElevation
+                fullWidth
+              >
+                Concluir pedido
+              </Button>
             </div>
           </div>
-          
-        )}        
+        )}
       </Modal>
     </>
-    
   );
 }
 

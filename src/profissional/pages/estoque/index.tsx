@@ -62,7 +62,9 @@ const colunas: GridColDef[] = [
 ];
 
 function Estoque() {
-  const ingredientes = useIngredientes();
+  const ingredientesQuery = useIngredientes();
+  const ingredientes = ingredientesQuery.data || [];
+
   const cadastrarIngrediente = useCadastrarIngrediente();
   const cadastrarEstoque = useCadastrarEstoque();
 
@@ -155,6 +157,7 @@ function Estoque() {
                   descricao: descricaoNovoIngrediente,
                 });
                 setOpenModalCadastro(false);
+                ingredientesQuery.refetch();
               }}
             >
               Cadastrar
@@ -212,6 +215,7 @@ function Estoque() {
                     quantidadeDisponivel: registroQuantidade,
                   });
                 }
+                ingredientesQuery.refetch();
                 setOpenModalRegistro(false);
               }}
             >

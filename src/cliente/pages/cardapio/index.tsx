@@ -26,7 +26,9 @@ import {
 // ]
 
 function Cardapio() {
-  const drinks = useDrinks();
+  const drinksQuery = useDrinks();
+  const drinks = drinksQuery.data || [];
+
   const cadastrarPedido = useCadastrarPedido();
 
   const [preCliente, setPreCliente] = useState("");
@@ -106,6 +108,7 @@ function Cardapio() {
                     drinkId: drinkSelecionado.id,
                   });
                   setDrinkSelecionado(null);
+                  drinksQuery.refetch();
                 }}
                 disableElevation
               >

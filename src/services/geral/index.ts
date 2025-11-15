@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "..";
+import { useCallback } from "react";
 
 export interface Pedido {
   id: number;
@@ -53,6 +54,7 @@ export interface Estoque {
 //   return response.data;
 // }
 
+
 export const usePedidos = () => {
   return (
     useQuery({
@@ -61,25 +63,35 @@ export const usePedidos = () => {
         const response = await api.get<Pedido[]>("/pedidos/pedidos");
         return response.data;
       },
-    }).data ?? []
+    })
   );
 };
 
 export const useCadastrarPedido = () => {
+  const refetchQueries = useQueriesRefetch();
+
   return useMutation({
     mutationFn: async (data: { cliente: string; drinkId: number }) => {
       const response = await api.post("/pedidos/pedido", data);
       return response.data;
     },
+    onSuccess: () => {
+      refetchQueries();
+    }
   });
 };
 
 export const useAceitarPedido = () => {
+  const refetchQueries = useQueriesRefetch();
+
   return useMutation({
     mutationFn: async (pedidoId: number) => {
       const response = await api.post("/pedidos/aceitar-pedido", {pedidoId});
       return response.data;
     },
+    onSuccess: () => {
+      refetchQueries();
+    }
   });
 };
 
@@ -91,11 +103,13 @@ export const useDrinks = () => {
         const response = await api.get<Drink[]>("/drinks/drinks");
         return response.data;
       },
-    }).data ?? []
+    })
   );
 };
 
 export const useCadastrarDrink = () => {
+  const refetchQueries = useQueriesRefetch();
+
   return useMutation({
     mutationFn: async (data: {
       nome: string;
@@ -111,6 +125,9 @@ export const useCadastrarDrink = () => {
       const response = await api.post("/drinks/drink", data);
       return response.data;
     },
+    onSuccess: () => {
+      refetchQueries();
+    }
   });
 };
 
@@ -124,16 +141,21 @@ export const useIngredientes = () => {
         );
         return response.data;
       },
-    }).data ?? []
+    })
   );
 };
 
 export const useCadastrarIngrediente = () => {
+  const refetchQueries = useQueriesRefetch();
+
   return useMutation({
     mutationFn: async (data: { nome: string; descricao?: string }) => {
       const response = await api.post("/ingredientes/ingrediente", data);
       return response.data;
     },
+    onSuccess: () => {
+      refetchQueries();
+    }
   });
 };
 
@@ -145,11 +167,13 @@ export const useEstoques = () => {
         const response = await api.get<Estoque[]>("/estoques/estoques");
         return response.data;
       },
-    }).data ?? []
+    })
   );
 };
 
 export const useCadastrarEstoque = () => {
+  const refetchQueries = useQueriesRefetch();
+
   return useMutation({
     mutationFn: async (data: {
       ingredienteId: number;
@@ -158,6 +182,9 @@ export const useCadastrarEstoque = () => {
       const response = await api.post("/estoques/estoque", data);
       return response.data;
     },
+    onSuccess: () => {
+      refetchQueries();
+    }
   });
 };
 
@@ -183,3 +210,25 @@ export const useCadastrarUsuario = () => {
     },
   });
 };
+
+// const useQueriesRefetch = () => (
+//   useDrinks().refetch(),
+//   usePedidos().refetch(),
+//   useIngredientes().refetch(),
+//   useEstoques().refetch(),
+// );
+
+const useQueriesRefetch = () => {
+  const drinks = useDrinks();
+  const pedidos = usePedidos();
+  const ingredientes = useIngredientes();
+  const estoques = useEstoques();
+
+  return useCallback(() => {
+    drinks.refetch();
+    pedidos.refetch();
+    ingredientes.refetch();
+    estoques.refetch();
+  }, [drinks, pedidos, ingredientes, estoques]);
+};
+

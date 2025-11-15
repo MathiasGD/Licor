@@ -72,8 +72,12 @@ const colunas: GridColDef[] = [
 // ]
 
 function Drinks() {
-  const drinks = useDrinks();
-  const ingredientes = useIngredientes();
+  const drinksQuery = useDrinks();
+  const drinks = drinksQuery.data || [];
+
+  const ingredientesQuery = useIngredientes();
+  const ingredientes = ingredientesQuery.data || [];
+
   const cadastrarDrink = useCadastrarDrink();
 
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
@@ -262,6 +266,7 @@ function Drinks() {
                   })),
                 });
                 setOpenModalCadastro(false);
+                drinksQuery.refetch();
               }}
             >
               Cadastrar
